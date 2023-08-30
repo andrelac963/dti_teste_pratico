@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: api.dockerfile
     ports:
-      - "3030:80"
+      - "5030:80"
 
   client_base:
     container_name: client_petshop_dti
@@ -16,4 +16,4 @@ services:
       context: .
       dockerfile: client.dockerfile
     ports:
-      - "3000:80"
+      - "5000:80"

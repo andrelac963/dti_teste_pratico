@@ -1,6 +1,8 @@
 # Teste prático para vaga de desenvolvedor na DTI Digital
 Este projeto foi desenvolvido para o teste prático da DTI Digital. O projeto consiste em uma aplicação web para encontrar o melhor preço de PetShop para o usuário, de acordo com a distância e o dia da semana.
 
+O projeto está hospedado em uma máquina virtual na Azure, e pode ser acessado através do link: http://20.226.111.232:5000
+
 ## Tecnologias e Decisões de Projeto
 
 *Frontend:*
