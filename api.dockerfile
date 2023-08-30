@@ -19,4 +19,4 @@ COPY --from=build /api/out ./
 EXPOSE 80
 
 # Start the application
-ENTRYPOINT ["dotnet", "YourApiProject.dll"]
+ENTRYPOINT ["dotnet", "api.dll"]
