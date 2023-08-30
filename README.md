@@ -15,13 +15,10 @@ Para o backend, foi utilizado o framework .NET 7.0, com C# para a linguagem de p
 
 ## Premissas
 
-A data inserida pelo usuário deve ser maior ou igual a data atual.
-
-A quantidade de cães deve ser maior ou igual a 0.
-
-O petshop escolhido será o que tiver o menor preço total e caso haja empate, será escolhido o que estiver mais próximo do usuário.
-
-O resultado do cálculo deve ser mostrado em um modal com o nome do PetShop com o menor preço e o preço total.
+- A data inserida pelo usuário deve ser maior ou igual a data atual.
+- A quantidade de cães deve ser maior ou igual a 0.
+- O petshop escolhido será o que tiver o menor preço total e caso haja empate, será escolhido o que estiver mais próximo do usuário.
+- O resultado do cálculo deve ser mostrado em um modal com o nome do PetShop com o menor preço e o preço total.
 
 Fora isso o próprio sistema deve validar se os dados inseridos pelo usuário estão corretos e mostrar um modal de alerta caso haja algum erro.
 
