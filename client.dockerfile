@@ -14,7 +14,7 @@ RUN npm run build
 
 # Use a lightweight web server to serve the build files
 FROM nginx:alpine AS runtime
-COPY --from=build /client/build /usr/share/nginx/html
+COPY --from=build /client/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
