@@ -13,6 +13,15 @@ Para o frontend, foi utilizado o framework ReactJS, com Typescript para tipagem,
 Para o backend, foi utilizado o framework .NET 7.0, com C# para a linguagem de programação. Decidi utilizar .NET pois é uma tecnologia que eu vinha estudando recentemente e é utilizada pela DTI Digital. Na implementação do projeto foi utilizado um DbContext para persistência de dados em memória já que não era necessário persistir os dados em um banco de dados. As especificações só exigiam uma rota para o cálculo do melhor preço, mas decidi implementar o CRUD completo para PetShops e para o usuário, para que fosse possível testar a aplicação de forma mais completa.
 
 
+## Premissas
+
+A data inserida pelo usuário deve ser maior ou igual a data atual.
+A quantidade de cães deve ser maior ou igual a 0.
+O petshop escolhido será o que tiver o menor preço total e caso haja empate, será escolhido o que estiver mais próximo do usuário.
+O resultado do cálculo deve ser mostrado em um modal com o nome do PetShop com o menor preço e o preço total.
+
+Fora isso o próprio sistema deve validar se os dados inseridos pelo usuário estão corretos e mostrar um modal de alerta caso haja algum erro.
+
 # Instruções para rodar o projeto
 
 ## Clonar o repositório
