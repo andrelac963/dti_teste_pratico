@@ -96,9 +96,9 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            var bestPetShopResponse = new
+            var bestPetShopResponse = new BestPetShopResponse
             {
-                bestPetShop.Name,
+                Name = bestPetShop.Name,
                 TotalPrice = Math.Round(CalculateTotalPrice(bestPetShop, dayOfWeek, criteria.SmallDogs, criteria.BigDogs), 2)
             };
 
@@ -116,6 +116,13 @@ namespace api.Controllers
             return (smallDogs * smallDogPrice) + (bigDogs * bigDogPrice);
         }
     }
+
+    internal class BestPetShopResponse
+    {
+        public required string Name { get; set; }
+        public required double TotalPrice { get; set; }
+    }
+
     public class PetShopSelectionCriteria
     {
         public required string Date { get; set; }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Alert } from "../../utils/components/Alert";
 import { Loading } from "../../utils/components/Loading";
@@ -25,25 +25,23 @@ export function Home() {
   const [alertMessage, setAlertMessage] = useState("");
 
   const [dataRequest, setDataRequest] = useState<BestPetShopRequestType>({
-    Date: "",
-    SmallDogs: 0,
-    BigDogs: 0,
+    date: "",
+    smallDogs: 0,
+    bigDogs: 0,
   });
 
-  const [BestPetShop, setBestPetShop] = useState<BestPetShopResponseType>();
-
-  useEffect(() => {}, [BestPetShop]);
+  const [bestPetShop, setBestPetShop] = useState<BestPetShopResponseType>();
 
   async function handleGetBestPetShop(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!dataRequest.Date || !dataRequest.SmallDogs || !dataRequest.BigDogs) {
+    if (!dataRequest.date || !dataRequest.smallDogs || !dataRequest.bigDogs) {
       setAlertMessage("Preencha todos os campos!");
       setAlertVisibility(true);
       return;
     }
 
-    const selectedDate = new Date(dataRequest.Date + " 00:00:00");
+    const selectedDate = new Date(dataRequest.date + " 00:00:00");
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -56,16 +54,12 @@ export function Home() {
     try {
       setIsLoading(true);
 
-      const response = await getBestPetShop(dataRequest);
-
-      setBestPetShop(response);
-
-      console.log(BestPetShop);
+      setBestPetShop(await getBestPetShop(dataRequest));
 
       setDataRequest({
-        Date: "",
-        SmallDogs: 0,
-        BigDogs: 0,
+        date: "",
+        smallDogs: 0,
+        bigDogs: 0,
       });
     } catch (err: any) {
       setAlertMessage(err.message);
@@ -79,70 +73,70 @@ export function Home() {
     <>
       <Container>
         <Content>
-          <Title>Novo Banho</Title>
+          <Title>Consulta de Pet Shops</Title>
           <Form onSubmit={handleGetBestPetShop}>
             <InputContainer>
               <Label>Data</Label>
               <Input
-                value={dataRequest.Date}
+                value={dataRequest.date}
                 onChange={(e: any) =>
-                  setDataRequest((prev) => ({ ...prev, Date: e.target.value }))
+                  setDataRequest((prev) => ({ ...prev, date: e.target.value }))
                 }
                 placeholder="Data do banho"
                 type="date"
+                max-length="10"
                 aria-label="Data do banho"
               />
             </InputContainer>
             <InputContainer>
-              <Label>Quantidade de cachorros pequenos</Label>
+              <Label>Quantidade de cães pequenos</Label>
               <Input
-                value={dataRequest.SmallDogs}
+                value={dataRequest.smallDogs}
                 onChange={(e: any) => {
                   const inputValue = parseInt(e.target.value);
                   if (!isNaN(inputValue) && inputValue >= 0) {
                     setDataRequest((prev) => ({
                       ...prev,
-                      SmallDogs: inputValue,
+                      smallDogs: inputValue,
                     }));
                   }
                 }}
-                placeholder="Número de cachorros pequenos"
+                placeholder="Número de cães pequenos"
                 type="number"
                 max-length="10"
-                aria-label="Número de cachorros pequenos"
+                aria-label="Número de cães pequenos"
               />
             </InputContainer>
 
             <InputContainer>
-              <Label>Quantidade de cachorros grandes</Label>
+              <Label>Quantidade de cães grandes</Label>
               <Input
-                value={dataRequest.BigDogs}
+                value={dataRequest.bigDogs}
                 onChange={(e: any) => {
                   const inputValue = parseInt(e.target.value);
                   if (!isNaN(inputValue) && inputValue >= 0) {
                     setDataRequest((prev) => ({
                       ...prev,
-                      BigDogs: inputValue,
+                      bigDogs: inputValue,
                     }));
                   }
                 }}
-                placeholder="Número de cachorros grandes"
+                placeholder="Número de cães grandes"
                 type="number"
                 max-length="10"
-                aria-label="Número de cachorros grandes"
+                aria-label="Número de cães grandes"
               />
             </InputContainer>
 
-            <Button type="submit">Criar</Button>
+            <Button type="submit">Encontrar Melhor Pet Shop</Button>
           </Form>
         </Content>
         <Content>
           <Title>Resultado</Title>
-          {BestPetShop && (
+          {bestPetShop && (
             <>
-              <Text> {BestPetShop.Name} </Text>
-              <Text> {BestPetShop.Distance} </Text>
-              <Text> {BestPetShop.TotalPrice} </Text>
+              <Text> Nome: {bestPetShop.name} </Text>
+              <Text> Preço total: R${bestPetShop.totalPrice} </Text>
             </>
           )}
         </Content>

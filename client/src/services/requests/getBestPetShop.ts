@@ -1,18 +1,17 @@
 import { api } from "../api";
 
 export interface BestPetShopRequestType {
-  Date: string;
-  SmallDogs: number;
-  BigDogs: number;
+  date: string;
+  smallDogs: number;
+  bigDogs: number;
 }
 
 export interface BestPetShopResponseType {
-  Name: string;
-  Distance: number;
-  TotalPrice: number;
+  name: string;
+  totalPrice: number;
 }
 
 export async function getBestPetShop(body: BestPetShopRequestType) {
-  const response = await api.post("/PetShop/BestPetShop", body);
+  const response = await api.post("/petshop/best", body);
   return response.data as BestPetShopResponseType;
 }

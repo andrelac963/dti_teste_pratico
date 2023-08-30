@@ -7,7 +7,8 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Content = styled.div`
@@ -16,7 +17,7 @@ export const Content = styled.div`
 
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   gap: 2rem;
 `;
 
@@ -56,14 +57,14 @@ export const Input = styled.input`
 
   color: #333;
   border: 2px solid #dcdce6;
-  border-radius: 0 0.5rem 0.5rem 0;
+  border-radius: 0.5rem;
 `;
 
 export const Button = styled.button`
-  width: 8rem;
+  width: 18rem;
   height: 3rem;
   margin-top: 1rem;
-  align-self: flex-end;
+  align-self: center;
 
   background-color: #4169e1;
   border: 0;
