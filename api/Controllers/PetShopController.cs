@@ -1,82 +1,124 @@
-using api.Model;
-using api.Services;
+using api.Entities;
+using api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/petshop")]
     public class PetShopController : ControllerBase
     {
-        private readonly ILogger<PetShopController> _logger;
-        private readonly IPetShopService _petShopService;
+        private readonly PetShopsDbContext _context;
 
-        public PetShopController(ILogger<PetShopController> logger, IPetShopService petShopService)
+        public PetShopController(PetShopsDbContext context)
         {
-            _logger = logger;
-            _petShopService = petShopService;
+            _context = context;
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] PetShop petShop)
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            var createdPetShop = _petShopService.Create(petShop);
-            if(createdPetShop == null)
-            {
-                return BadRequest("Não foi possível criar o PetShop.");
-            }
-            return Ok(createdPetShop);
+            var petShops = _context.PetShops.ToList();
+
+            return Ok(petShops);
         }
 
-        [HttpGet("getById/{id}")]
-        public IActionResult FindById(long id)
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
         {
-            var foundPetShop = _petShopService.FindById(id);
+            var foundPetShop = _context.PetShops.FirstOrDefault(p => p.Id == id);
+
             if (foundPetShop == null)
             {
-                return NotFound("Nenhum PetShop encontrado.");
+                return NotFound();
             }
+
             return Ok(foundPetShop);
         }
 
-        [HttpGet("getAll")]
-        public IActionResult FindAll()
+        [HttpPost]
+        public IActionResult Create(PetShop petShop)
         {
-            var allPetShops = _petShopService.FindAll();
-            return Ok(allPetShops);
+            if (petShop == null)
+            {
+                  return BadRequest();
+            }
+
+            petShop.Id = Guid.NewGuid();
+
+            _context.PetShops.Add(petShop);
+
+            return CreatedAtAction(nameof(GetById), new { id = petShop.Id }, petShop);
         }
 
-        [HttpPut]
-        public IActionResult Update([FromBody] PetShop petShop)
+        [HttpPut("{id}")]
+        public IActionResult Update(Guid id, PetShop petShopInput)
         {
-            _petShopService.Update(petShop);
-            return Ok();
+            var foundPetShop = _context.PetShops.FirstOrDefault(p => p.Id == id);
+
+            if (foundPetShop == null)
+            {
+                return NotFound();
+            }
+
+            foundPetShop.Update(petShopInput.Name, petShopInput.Distance, petShopInput.Price_small_dog_weekday, petShopInput.Price_small_dog_weekend, petShopInput.Price_big_dog_weekday, petShopInput.Price_big_dog_weekend);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(Guid id)
         {
-            _petShopService.Delete(id);
-            return Ok();
+            var foundPetShop = _context.PetShops.FirstOrDefault(p => p.Id == id);
+
+            if (foundPetShop == null)
+            {
+                return NotFound();
+            }
+
+            _context.Delete(id);
+
+            return NoContent();
         }
 
-        [HttpPost("BestPetShop")]
-        public IActionResult BestPetShop([FromBody] PetShopSelectionCriteria criteria)
+        [HttpPost("best")]
+        public IActionResult BestPetShop(PetShopSelectionCriteria criteria)
         {
-            var bestPetShop = _petShopService.BestPetShop(criteria.Date, criteria.SmallDogs, criteria.BigDogs);
+            var dayOfWeek = DateTime.Parse(criteria.Date).DayOfWeek;
+
+            var bestPetShop = _context.PetShops
+                .OrderBy(p => CalculateTotalPrice(p, dayOfWeek, criteria.SmallDogs, criteria.BigDogs))
+                .ThenBy(p => p.Distance)
+                .FirstOrDefault();
 
             if (bestPetShop == null)
             {
-                return NotFound("Nenhum PetShop encontrado.");
+                return NotFound();
             }
 
-            return Ok(bestPetShop);
+            var bestPetShopResponse = new
+            {
+                bestPetShop.Name,
+                TotalPrice = Math.Round(CalculateTotalPrice(bestPetShop, dayOfWeek, criteria.SmallDogs, criteria.BigDogs), 2)
+            };
+
+            return Ok(bestPetShopResponse);
+        }
+
+        public double CalculateTotalPrice(PetShop petShop, DayOfWeek dayOfWeek, int smallDogs, int bigDogs)
+        {
+            var smallDogPrice = (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday) ?
+                               petShop.Price_small_dog_weekend : petShop.Price_small_dog_weekday;
+
+            var bigDogPrice = (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday) ?
+                              petShop.Price_big_dog_weekend : petShop.Price_big_dog_weekday;
+
+            return (smallDogs * smallDogPrice) + (bigDogs * bigDogPrice);
         }
     }
-
     public class PetShopSelectionCriteria
     {
-        public string Date { get; set; }
+        public required string Date { get; set; }
         public int SmallDogs { get; set; }
         public int BigDogs { get; set; }
     }
