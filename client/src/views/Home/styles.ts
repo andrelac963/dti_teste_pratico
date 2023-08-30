@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 2rem;
 
   display: flex;
@@ -22,8 +22,9 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: bold;
+  text-align: center;
 `;
 
 export const Form = styled.form`
@@ -61,12 +62,13 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  width: 18rem;
+  width: 20rem;
+  max-width: 100%;
   height: 3rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   align-self: center;
 
-  background-color: #4169e1;
+  background-color: #5d5c49;
   border: 0;
   border-radius: 0.5rem;
 
@@ -79,9 +81,4 @@ export const Button = styled.button`
   &:hover {
     filter: brightness(90%);
   }
-`;
-
-export const Text = styled.p`
-  font-size: 1rem;
-  font-weight: bold;
 `;

@@ -14,22 +14,58 @@ export const Overlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  width: 20rem;
-  padding: 2rem;
+  width: 30rem;
+  max-width: 80%;
+  height: 21rem;
+  max-height: 60%;
+  padding: 3rem;
   z-index: 10;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 
   border-radius: 0.5rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.6);
   background-color: #fff;
 `;
 
-export const Text = styled.h2`
-  font-size: 1rem;
+export const Title = styled.h1`
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+export const ResultContainer = styled.div`
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  border-radius: 0.5rem;
+  border: 0.1rem solid #dcdbaf;
+`;
+
+export const TextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`;
+
+export const TextBold = styled.p`
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  color: #801245;
+`;
+
+export const Text = styled.p`
+  font-size: 1.1rem;
   text-align: center;
   color: #801245;
 `;
@@ -37,6 +73,8 @@ export const Text = styled.h2`
 export const Button = styled.button`
   width: 10rem;
   height: 2rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
 
   background-color: #5d5c49;
   border: 0;

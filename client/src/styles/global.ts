@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import background from "../assets/background.jpg";
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -10,6 +11,14 @@ export const GlobalStyle = createGlobalStyle`
 
   body, input, button {
     font: 1rem Roboto, sans-serif;
+  }
+
+  body {
+    background-image: url(${background});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
   }
 
   button {

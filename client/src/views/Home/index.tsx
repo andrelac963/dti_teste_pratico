@@ -16,13 +16,14 @@ import {
   Label,
   Input,
   Button,
-  Text,
 } from "./styles";
+import { ResultModal } from "../../utils/components/ResultModal";
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [alertVisibility, setAlertVisibility] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [resultModalVisibility, setResultModalVisibility] = useState(false);
 
   const [dataRequest, setDataRequest] = useState<BestPetShopRequestType>({
     date: "",
@@ -35,7 +36,7 @@ export function Home() {
   async function handleGetBestPetShop(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!dataRequest.date || !dataRequest.smallDogs || !dataRequest.bigDogs) {
+    if (!dataRequest.date) {
       setAlertMessage("Preencha todos os campos!");
       setAlertVisibility(true);
       return;
@@ -55,6 +56,8 @@ export function Home() {
       setIsLoading(true);
 
       setBestPetShop(await getBestPetShop(dataRequest));
+
+      setResultModalVisibility(true);
 
       setDataRequest({
         date: "",
@@ -131,19 +134,16 @@ export function Home() {
             <Button type="submit">Encontrar Melhor Pet Shop</Button>
           </Form>
         </Content>
-        <Content>
-          <Title>Resultado</Title>
-          {bestPetShop && (
-            <>
-              <Text> Nome: {bestPetShop.name} </Text>
-              <Text> Preço total: R${bestPetShop.totalPrice} </Text>
-            </>
-          )}
-        </Content>
       </Container>
       {isLoading && <Loading />}
       {alertVisibility && (
         <Alert message={alertMessage} setAlertVisibility={setAlertVisibility} />
+      )}
+      {resultModalVisibility && (
+        <ResultModal
+          bestPetShop={bestPetShop!}
+          setResultModalVisibility={setResultModalVisibility}
+        />
       )}
     </>
   );
