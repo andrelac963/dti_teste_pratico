@@ -25,12 +25,12 @@ export function ResultModal({
         <Title>Parabéns! Você encontrou o seu Pet Shop ideal.</Title>
         <ResultContainer>
           <TextContainer>
-          <TextBold>Nome:</TextBold>
-          <Text>{bestPetShop.name}</Text>
+            <TextBold>Nome:</TextBold>
+            <Text>{bestPetShop.name}</Text>
           </TextContainer>
           <TextContainer>
-          <TextBold>Preço total:</TextBold>
-          <Text>R$ {bestPetShop.totalPrice}</Text>
+            <TextBold>Preço total:</TextBold>
+            <Text>R$ {bestPetShop.totalPrice}</Text>
           </TextContainer>
         </ResultContainer>
         <Button onClick={() => setResultModalVisibility(false)}>Fechar</Button>

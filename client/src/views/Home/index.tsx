@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Alert } from "../../utils/components/Alert";
 import { Loading } from "../../utils/components/Loading";
+import { ResultModal } from "../../utils/components/ResultModal";
 
 import { getBestPetShop } from "../../services/requests/getBestPetShop";
 import { BestPetShopRequestType } from "../../services/requests/getBestPetShop";
@@ -17,7 +18,6 @@ import {
   Input,
   Button,
 } from "./styles";
-import { ResultModal } from "../../utils/components/ResultModal";
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,12 +36,14 @@ export function Home() {
   async function handleGetBestPetShop(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    // Validação se todos os campos foram preenchidos
     if (!dataRequest.date) {
       setAlertMessage("Preencha todos os campos!");
       setAlertVisibility(true);
       return;
     }
 
+    // Validação se a data é maior ou igual a data atual
     const selectedDate = new Date(dataRequest.date + " 00:00:00");
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -52,6 +54,7 @@ export function Home() {
       return;
     }
 
+    // Requisição para a API
     try {
       setIsLoading(true);
 

@@ -31,8 +31,8 @@ namespace api.Persistence
                 Distance = 1700,
                 Price_small_dog_weekday = 15,
                 Price_small_dog_weekend = 20,
-                Price_big_dog_weekday = 30,
-                Price_big_dog_weekend = 45,
+                Price_big_dog_weekday = 50,
+                Price_big_dog_weekend = 55,
             });
             PetShops.Add(new PetShop
             {
@@ -40,7 +40,7 @@ namespace api.Persistence
                 Name = "ChowChawgas",
                 Distance = 800,
                 Price_small_dog_weekday = 30,
-                Price_small_dog_weekend = 45,
+                Price_small_dog_weekend = 30,
                 Price_big_dog_weekday = 45,
                 Price_big_dog_weekend = 45,
             });

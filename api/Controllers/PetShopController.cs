@@ -30,7 +30,7 @@ namespace api.Controllers
 
             if (foundPetShop == null)
             {
-                return NotFound();
+                return NotFound("Nenhum Pet Shop encontrado!");
             }
 
             return Ok(foundPetShop);
@@ -41,7 +41,7 @@ namespace api.Controllers
         {
             if (petShop == null)
             {
-                  return BadRequest();
+                  return BadRequest("Parâmetros inválidos!");
             }
 
             petShop.Id = Guid.NewGuid();
@@ -73,7 +73,7 @@ namespace api.Controllers
 
             if (foundPetShop == null)
             {
-                return NotFound();
+                return NotFound("Nenhum Pet Shop encontrado!");
             }
 
             _context.Delete(id);
@@ -84,6 +84,21 @@ namespace api.Controllers
         [HttpPost("best")]
         public IActionResult BestPetShop(PetShopSelectionCriteria criteria)
         {
+            if(criteria == null)
+            {
+                return BadRequest("Parâmetros inválidos!");
+            }
+
+            if(criteria.SmallDogs < 0 || criteria.BigDogs < 0)
+            {
+                return BadRequest("Quantidade de cães inválida!");
+            }
+
+            if(DateTime.Parse(criteria.Date) < DateTime.Now.Date)
+            {
+                return BadRequest("Data inválida!");
+            }
+
             var dayOfWeek = DateTime.Parse(criteria.Date).DayOfWeek;
 
             var bestPetShop = _context.PetShops
@@ -93,7 +108,7 @@ namespace api.Controllers
 
             if (bestPetShop == null)
             {
-                return NotFound();
+                return NotFound("Nenhum Pet Shop encontrado!");
             }
 
             var bestPetShopResponse = new BestPetShopResponse
