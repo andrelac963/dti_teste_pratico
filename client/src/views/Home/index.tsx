@@ -92,6 +92,7 @@ export function Home() {
                 type="date"
                 max-length="10"
                 aria-label="Data do banho"
+                min={new Date().toISOString().split("T")[0]}
               />
             </InputContainer>
             <InputContainer>
@@ -111,6 +112,7 @@ export function Home() {
                 type="number"
                 max-length="10"
                 aria-label="Número de cães pequenos"
+                max="9999999999"
               />
             </InputContainer>
 
@@ -131,6 +133,7 @@ export function Home() {
                 type="number"
                 max-length="10"
                 aria-label="Número de cães grandes"
+                max="9999999999"
               />
             </InputContainer>
 

@@ -15,12 +15,15 @@ Para o backend, foi utilizado o framework .NET 7.0, com C# para a linguagem de p
 
 ## Premissas
 
-- A data inserida pelo usuário deve ser maior ou igual a data atual.
-- A quantidade de cães deve ser maior ou igual a 0.
-- O petshop escolhido será o que tiver o menor preço total e caso haja empate, será escolhido o que estiver mais próximo do usuário.
-- O resultado do cálculo deve ser mostrado em um modal com o nome do PetShop com o menor preço e o preço total.
+Pensando na experiência do usuário foram implementadas algumas medidas para evitar erros:
 
-Fora isso o próprio sistema deve validar se os dados inseridos pelo usuário estão corretos e mostrar um modal de alerta caso haja algum erro.
+- A data está limitada somente a datas futuras, não sendo possível selecionar datas passadas.
+- A quantidade de animais está limitada para números positivos e com no máximo 10 dígitos que é o limite que o backend suporta.
+- O resultado do melhor petshop é mostrado em um modal, para que o usuário não precise rolar a página para ver o resultado e para que possa fazer uma nova busca apenas fechando o modal.
+- Se ocorrer algum erro, como por exemplo, o usuário não preencher algum campo, é mostrado um modal de alerta para informar o usuário sobre o erro.
+- No backend, foi implementado um tratamento de exceções para que o usuário não receba uma mensagem de erro do servidor, e sim uma mensagem mais amigável.
+
+No geral tentei implementar o projeto de forma que o usuário não precise se preocupar com erros e que a experiência dele seja a mais confiável possível.
 
 # Instruções para rodar o projeto
 
